@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="JoblyApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" />
+    <envs>
+      <env name="DB_PORT" value="5432" />
+      <env name="DB_NAME" value="jobly-db" />
+      <env name="DB_USER" value="postgres" />
+      <env name="DB_PASSWORD" value="password" />
+    </envs>
+    <module name="Jobly" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.jobly.Jobly.JoblyApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
