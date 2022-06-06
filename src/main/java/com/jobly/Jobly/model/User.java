@@ -21,6 +21,9 @@ public class User {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "candidate_id", referencedColumnName = "id")
     private Candidate candidate;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "employer_id", referencedColumnName = "id")
+    private Employer employer;
     @NotNull
     @Email
     private String email;
