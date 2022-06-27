@@ -17,4 +17,8 @@ public class CandidateService {
     public List<Candidate> getAll() {
         return candidateRepository.findAll();
     }
+
+    public void createUser(Candidate candidate) {
+        candidateRepository.save(candidate);
+    }
 }

@@ -16,4 +16,8 @@ public class EmployerService {
     public List<Employer> getAll() {
         return employerRepository.findAll();
     }
+
+    public void createEmployer(Employer employer) {
+        employerRepository.save(employer);
+    }
 }
