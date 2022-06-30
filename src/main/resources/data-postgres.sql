@@ -1,3 +1,6 @@
+INSERT INTO public.roles(name)
+VALUES('ROLE_ADMIN');
+
 INSERT INTO public.user(email, password, creation_time)
 VALUES ('alamakota@gamil.com', 'password', localtimestamp);
 

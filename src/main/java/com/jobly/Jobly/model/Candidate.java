@@ -1,5 +1,6 @@
 package com.jobly.Jobly.model;
 
+import com.jobly.Jobly.model.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

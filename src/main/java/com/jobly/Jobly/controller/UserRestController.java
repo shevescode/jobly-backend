@@ -1,6 +1,6 @@
 package com.jobly.Jobly.controller;
 
-import com.jobly.Jobly.model.User;
+import com.jobly.Jobly.model.user.User;
 import com.jobly.Jobly.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +23,6 @@ public class UserRestController {
 
     @PostMapping("/users")
     public void createUser(@RequestBody User newUser) {
-        userService.createUser(newUser);
+        userService.save(newUser);
     }
 }
