@@ -1,4 +1,4 @@
-package com.jobly.Jobly.model;
+package com.jobly.Jobly.model.employer;
 
 import com.jobly.Jobly.model.user.User;
 import lombok.Getter;
