@@ -1,5 +1,8 @@
-package com.jobly.Jobly.model;
+package com.jobly.Jobly.model.user;
 
+import com.jobly.Jobly.model.Candidate;
+import com.jobly.Jobly.model.Employer;
+import com.jobly.Jobly.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +12,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -33,4 +37,10 @@ public class User {
     private String password;
     @NotNull
     private LocalDateTime creationTime;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Set<Role> roles;
 }

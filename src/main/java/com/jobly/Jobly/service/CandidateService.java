@@ -1,7 +1,6 @@
 package com.jobly.Jobly.service;
 
 import com.jobly.Jobly.model.Candidate;
-import com.jobly.Jobly.model.User;
 import com.jobly.Jobly.repository.CandidateRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
