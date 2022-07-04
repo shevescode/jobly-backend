@@ -3,10 +3,7 @@ package com.jobly.Jobly.model.user;
 import com.jobly.Jobly.model.Candidate;
 import com.jobly.Jobly.model.employer.Employer;
 import com.jobly.Jobly.model.Role;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -19,16 +16,16 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
+@ToString
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "candidate_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Candidate candidate;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "employer_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Employer employer;
     @NotNull
     @Email

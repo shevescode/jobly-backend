@@ -39,5 +39,6 @@ public class EmployerRestController {
         User user = userService.getByEmail(employerDto.getUserEmail()).get();
         user.setEmployer(newEmployer);
         userService.save(user);
+        System.out.println(userService.getByEmail(employerDto.getUserEmail()).get().getEmployer());
     }
 }
