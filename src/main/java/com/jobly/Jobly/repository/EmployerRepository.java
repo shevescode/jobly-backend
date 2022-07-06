@@ -1,6 +1,6 @@
 package com.jobly.Jobly.repository;
 
-import com.jobly.Jobly.model.Employer;
+import com.jobly.Jobly.model.employer.Employer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
