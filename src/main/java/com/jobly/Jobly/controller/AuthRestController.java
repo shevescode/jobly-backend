@@ -41,7 +41,6 @@ public class AuthRestController {
     @PostMapping("/signup")
     @CrossOrigin(origins = "http://localhost:3000/")
     public ResponseEntity<?> registerUser(@RequestBody UserDto userDto){
-        System.out.println("im in");
 //        // add check for username exists in a DB
 //        if(userService.existsByUsername(userDto.getUsername())){
 //            return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
