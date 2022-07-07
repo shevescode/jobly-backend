@@ -13,15 +13,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
 
 @RestController
+@CrossOrigin(maxAge = 3600)
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthRestController {
@@ -41,8 +39,9 @@ public class AuthRestController {
     }
 
     @PostMapping("/signup")
+    @CrossOrigin(origins = "http://localhost:3000/")
     public ResponseEntity<?> registerUser(@RequestBody UserDto userDto){
-
+        System.out.println("im in");
 //        // add check for username exists in a DB
 //        if(userService.existsByUsername(userDto.getUsername())){
 //            return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
