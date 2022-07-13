@@ -1,10 +1,7 @@
 package com.jobly.Jobly.model.employer;
 
 import com.jobly.Jobly.model.user.User;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,6 +10,8 @@ import javax.validation.constraints.NotNull;
 @Setter
 @NoArgsConstructor
 @Entity
+@AllArgsConstructor
+@Builder
 public class Employer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

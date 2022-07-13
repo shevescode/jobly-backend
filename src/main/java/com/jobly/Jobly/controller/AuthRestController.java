@@ -30,6 +30,7 @@ public class AuthRestController {
     private final RoleService roleService;
 
     @PostMapping("/signin")
+    @CrossOrigin(origins = "http://localhost:3000/")
     public ResponseEntity<String> authenticateUser(@RequestBody UserDto userDto){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 userDto.getEmail(), userDto.getPassword()));

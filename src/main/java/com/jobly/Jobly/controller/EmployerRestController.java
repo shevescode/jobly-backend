@@ -27,18 +27,21 @@ public class EmployerRestController {
 
     @PostMapping("/employer")
     public void createEmployer(@RequestBody EmployerDto employerDto) {
-        Employer newEmployer = new Employer();
-        newEmployer.setUser(userService.getByEmail(employerDto.getUserEmail()).get()); // TODO: Secure this
-        newEmployer.setCompanyName(employerDto.getCompanyName());
-        newEmployer.setIndustry(employerDto.getIndustry());
-        newEmployer.setPosition(employerDto.getPosition());
-        newEmployer.setSalary(employerDto.getSalary());
-        newEmployer.setLocation(employerDto.getLocation());
-        newEmployer.setWorkingTime(employerDto.getWorkingTime());
+        Employer newEmployer = Employer.builder()
+                .user(userService.getByEmail(employerDto.getUserEmail()).orElseThrow())
+                .companyName(employerDto.getCompanyName())
+                .industry(employerDto.getIndustry())
+                .position(employerDto.getPosition())
+                .salary(employerDto.getSalary())
+                .location(employerDto.getLocation())
+                .workingTime(employerDto.getWorkingTime())
+                .photoSrc(employerDto.getPhotoSrc())
+                .optionalRequirements(employerDto.getOptionalRequirements())
+                .build();
+
         employerService.createEmployer(newEmployer);
-        User user = userService.getByEmail(employerDto.getUserEmail()).get();
+        User user = userService.getByEmail(employerDto.getUserEmail()).orElseThrow();
         user.setEmployer(newEmployer);
         userService.save(user);
-        System.out.println(userService.getByEmail(employerDto.getUserEmail()).get().getEmployer());
     }
 }
