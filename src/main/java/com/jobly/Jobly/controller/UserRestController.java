@@ -1,7 +1,7 @@
 package com.jobly.Jobly.controller;
 
-import com.jobly.Jobly.model.user.User;
-import com.jobly.Jobly.service.UserService;
+import com.jobly.Jobly.model.user.MyUser;
+import com.jobly.Jobly.service.MyUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,15 +14,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserRestController {
 
-    private final UserService userService;
+    private final MyUserService myUserService;
 
     @GetMapping("/users")
-    public List<User> getAllUsers() {
-        return userService.getAll();
+    public List<MyUser> getAllUsers() {
+        return myUserService.getAll();
     }
 
     @PostMapping("/users")
-    public void createUser(@RequestBody User newUser) {
-        userService.save(newUser);
+    public void createUser(@RequestBody MyUser newMyUser) {
+        myUserService.save(newMyUser);
     }
 }

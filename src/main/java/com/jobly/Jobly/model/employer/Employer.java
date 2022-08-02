@@ -1,6 +1,6 @@
 package com.jobly.Jobly.model.employer;
 
-import com.jobly.Jobly.model.user.User;
+import com.jobly.Jobly.model.user.MyUser;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,8 +17,8 @@ public class Employer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "my_user_id")
+    private MyUser myUser;
     @NotNull
     private String companyName;
     @NotNull

@@ -2,11 +2,15 @@ package com.jobly.Jobly.controller;
 
 import com.jobly.Jobly.model.employer.Employer;
 import com.jobly.Jobly.model.employer.EmployerDto;
-import com.jobly.Jobly.model.user.User;
+import com.jobly.Jobly.model.user.MyUser;
 import com.jobly.Jobly.service.EmployerService;
-import com.jobly.Jobly.service.UserService;
+import com.jobly.Jobly.service.MyUserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.security.PermitAll;
 import java.util.List;
@@ -17,7 +21,7 @@ import java.util.List;
 public class EmployerRestController {
 
     private final EmployerService employerService;
-    private final UserService userService;
+    private final MyUserService myUserService;
 
     @GetMapping("/employer")
     public List<Employer> getAllEmployers() {
@@ -25,24 +29,9 @@ public class EmployerRestController {
     }
 
     @PostMapping("/employer")
-    public void createEmployer(@RequestBody EmployerDto employerDto) {
-        System.out.println("weszło tutaj");
-        System.out.println(employerDto.toString());
-        Employer newEmployer = Employer.builder()
-                .user(userService.getByEmail(employerDto.getUserEmail()).orElseThrow())
-                .companyName(employerDto.getCompanyName())
-                .industry(employerDto.getIndustry())
-                .position(employerDto.getPosition())
-                .salary(employerDto.getSalary())
-                .location(employerDto.getLocation())
-                .workingTime(employerDto.getWorkingTime())
-                .photoSrc(employerDto.getPhotoSrc())
-                .optionalRequirements(employerDto.getOptionalRequirements())
-                .build();
-
-        employerService.createEmployer(newEmployer);
-        User user = userService.getByEmail(employerDto.getUserEmail()).orElseThrow();
-        user.setEmployer(newEmployer);
-        userService.save(user);
+    public void createEmployer(@RequestBody EmployerDto employerDto, @AuthenticationPrincipal org.springframework.security.core.userdetails.User principal) {
+        MyUser myUser = myUserService.getByEmail(principal.getUsername()).orElseThrow();
+        Employer newEmployer = employerDto.toEmployer(myUser);
+        employerService.createEmployer(newEmployer, myUser);
     }
 }
