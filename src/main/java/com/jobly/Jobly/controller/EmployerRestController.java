@@ -2,9 +2,9 @@ package com.jobly.Jobly.controller;
 
 import com.jobly.Jobly.model.employer.Employer;
 import com.jobly.Jobly.model.employer.EmployerDto;
-import com.jobly.Jobly.model.user.User;
+import com.jobly.Jobly.model.user.MyUser;
 import com.jobly.Jobly.service.EmployerService;
-import com.jobly.Jobly.service.UserService;
+import com.jobly.Jobly.service.MyUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ import java.util.List;
 public class EmployerRestController {
 
     private final EmployerService employerService;
-    private final UserService userService;
+    private final MyUserService myUserService;
 
     @GetMapping("/employer")
     public List<Employer> getAllEmployers() {
@@ -31,7 +31,7 @@ public class EmployerRestController {
 //        org.springframework.security.core.userdetails.User principal = ((org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         System.out.println(principal.getUsername());
         Employer newEmployer = Employer.builder() // TODO: przenieść do employerDTO
-                .user(userService.getByEmail(principal.getUsername()).orElseThrow())
+                .myUser(myUserService.getByEmail(principal.getUsername()).orElseThrow())
                 .companyName(employerDto.getCompanyName())
                 .industry(employerDto.getIndustry())
                 .position(employerDto.getPosition())
@@ -43,8 +43,8 @@ public class EmployerRestController {
                 .build();
 
         employerService.createEmployer(newEmployer);
-        User user = userService.getByEmail(employerDto.getUserEmail()).orElseThrow();
-        user.setEmployer(newEmployer);
-        userService.save(user); // TODO: przenieść do employerService
+        MyUser myUser = myUserService.getByEmail(employerDto.getUserEmail()).orElseThrow();
+        myUser.setEmployer(newEmployer);
+        myUserService.save(myUser); // TODO: przenieść do employerService
     }
 }

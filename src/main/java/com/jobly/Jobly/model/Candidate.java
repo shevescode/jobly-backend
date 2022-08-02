@@ -1,6 +1,6 @@
 package com.jobly.Jobly.model;
 
-import com.jobly.Jobly.model.user.User;
+import com.jobly.Jobly.model.user.MyUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,8 +18,8 @@ public class Candidate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "my_user_id")
+    private MyUser myUser;
     @NotNull
     private String firstName;
     @NotNull

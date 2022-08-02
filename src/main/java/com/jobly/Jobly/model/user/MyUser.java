@@ -18,14 +18,14 @@ import java.util.Set;
 @Entity
 @Builder
 @ToString
-public class User {
+public class MyUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "myUser", cascade = CascadeType.ALL)
     private Candidate candidate;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "myUser", cascade = CascadeType.ALL)
     private Employer employer;
     @NotNull
     @Email
@@ -36,8 +36,8 @@ public class User {
     private LocalDateTime creationTime;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+    @JoinTable(name = "my_user_roles",
+            joinColumns = @JoinColumn(name = "my_user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles;
 }

@@ -1,8 +1,8 @@
 package com.jobly.Jobly.service;
 
 import com.jobly.Jobly.model.Role;
-import com.jobly.Jobly.model.user.User;
-import com.jobly.Jobly.repository.UserRepository;
+import com.jobly.Jobly.model.user.MyUser;
+import com.jobly.Jobly.repository.MyUserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,19 +17,19 @@ import java.util.stream.Collectors;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private UserRepository userRepository;
+    private MyUserRepository myUserRepository;
 
-    public CustomUserDetailsService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public CustomUserDetailsService(MyUserRepository myUserRepository) {
+        this.myUserRepository = myUserRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email)
+        MyUser myUser = myUserRepository.findByEmail(email)
                 .orElseThrow(() ->
                         new UsernameNotFoundException("User not found with username or email:" + email));
-        return new org.springframework.security.core.userdetails.User(user.getEmail(),
-                user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+        return new org.springframework.security.core.userdetails.User(myUser.getEmail(),
+                myUser.getPassword(), mapRolesToAuthorities(myUser.getRoles()));
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Set<Role> roles) {

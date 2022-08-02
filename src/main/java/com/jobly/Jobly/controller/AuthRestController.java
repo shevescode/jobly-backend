@@ -1,10 +1,10 @@
 package com.jobly.Jobly.controller;
 
 import com.jobly.Jobly.model.Role;
-import com.jobly.Jobly.model.user.User;
+import com.jobly.Jobly.model.user.MyUser;
 import com.jobly.Jobly.model.user.UserDto;
 import com.jobly.Jobly.service.RoleService;
-import com.jobly.Jobly.service.UserService;
+import com.jobly.Jobly.service.MyUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class AuthRestController {
 
-    private final UserService userService;
+    private final MyUserService myUserService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final RoleService roleService;
@@ -45,20 +45,20 @@ public class AuthRestController {
 //        }
 
         // add check for email exists in DB
-        if(userService.existsByEmail(userDto.getEmail())){
+        if(myUserService.existsByEmail(userDto.getEmail())){
             return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
         }
 
         // create user object
-        User user = new User(); // TODO: przenieść logikę do service
-        user.setEmail(userDto.getEmail());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setCreationTime(LocalDateTime.now());
+        MyUser myUser = new MyUser(); // TODO: przenieść logikę do service
+        myUser.setEmail(userDto.getEmail());
+        myUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        myUser.setCreationTime(LocalDateTime.now());
 
         Role roles = roleService.findByName("ROLE_ADMIN").get();
-        user.setRoles(Collections.singleton(roles));
+        myUser.setRoles(Collections.singleton(roles));
 
-        userService.save(user);
+        myUserService.save(myUser);
 
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
 

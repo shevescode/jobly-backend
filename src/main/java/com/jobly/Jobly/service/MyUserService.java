@@ -1,7 +1,7 @@
 package com.jobly.Jobly.service;
 
-import com.jobly.Jobly.model.user.User;
-import com.jobly.Jobly.repository.UserRepository;
+import com.jobly.Jobly.model.user.MyUser;
+import com.jobly.Jobly.repository.MyUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,23 +10,23 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class MyUserService {
 
-    private final UserRepository userRepository;
+    private final MyUserRepository myUserRepository;
 
-    public List<User> getAll() {
-        return userRepository.findAll();
+    public List<MyUser> getAll() {
+        return myUserRepository.findAll();
     }
 
-    public Optional<User> getByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public Optional<MyUser> getByEmail(String email) {
+        return myUserRepository.findByEmail(email);
     }
 
-    public void save(User user) {
-        userRepository.save(user);
+    public void save(MyUser myUser) {
+        myUserRepository.save(myUser);
     }
 
     public boolean existsByEmail(String email) {
-        return userRepository.existsByEmail(email);
+        return myUserRepository.existsByEmail(email);
     }
 }
