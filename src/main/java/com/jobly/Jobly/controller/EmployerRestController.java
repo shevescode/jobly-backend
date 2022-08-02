@@ -6,6 +6,7 @@ import com.jobly.Jobly.model.user.User;
 import com.jobly.Jobly.service.EmployerService;
 import com.jobly.Jobly.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,9 +27,11 @@ public class EmployerRestController {
     }
 
     @PostMapping("/employer")
-    public void createEmployer(@RequestBody EmployerDto employerDto) {
-        Employer newEmployer = Employer.builder()
-                .user(userService.getByEmail(employerDto.getUserEmail()).orElseThrow())
+    public void createEmployer(@RequestBody EmployerDto employerDto, @AuthenticationPrincipal org.springframework.security.core.userdetails.User principal) {
+//        org.springframework.security.core.userdetails.User principal = ((org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        System.out.println(principal.getUsername());
+        Employer newEmployer = Employer.builder() // TODO: przenieść do employerDTO
+                .user(userService.getByEmail(principal.getUsername()).orElseThrow())
                 .companyName(employerDto.getCompanyName())
                 .industry(employerDto.getIndustry())
                 .position(employerDto.getPosition())
@@ -42,6 +45,6 @@ public class EmployerRestController {
         employerService.createEmployer(newEmployer);
         User user = userService.getByEmail(employerDto.getUserEmail()).orElseThrow();
         user.setEmployer(newEmployer);
-        userService.save(user);
+        userService.save(user); // TODO: przenieść do employerService
     }
 }

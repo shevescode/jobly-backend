@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 
 @RestController
-@CrossOrigin(maxAge = 3600)
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthRestController {
@@ -29,8 +28,7 @@ public class AuthRestController {
     private final AuthenticationManager authenticationManager;
     private final RoleService roleService;
 
-    @PostMapping("/signin")
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @PostMapping("/login")
     public ResponseEntity<String> authenticateUser(@RequestBody UserDto userDto){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 userDto.getEmail(), userDto.getPassword()));
@@ -39,8 +37,7 @@ public class AuthRestController {
         return new ResponseEntity<>("User signed-in successfully!.", HttpStatus.OK);
     }
 
-    @PostMapping("/signup")
-    @CrossOrigin(origins = "http://localhost:3000/")
+    @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody UserDto userDto){
 //        // add check for username exists in a DB
 //        if(userService.existsByUsername(userDto.getUsername())){
@@ -53,7 +50,7 @@ public class AuthRestController {
         }
 
         // create user object
-        User user = new User();
+        User user = new User(); // TODO: przenieść logikę do service
         user.setEmail(userDto.getEmail());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setCreationTime(LocalDateTime.now());
