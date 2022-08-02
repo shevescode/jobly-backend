@@ -28,23 +28,8 @@ public class EmployerRestController {
 
     @PostMapping("/employer")
     public void createEmployer(@RequestBody EmployerDto employerDto, @AuthenticationPrincipal org.springframework.security.core.userdetails.User principal) {
-//        org.springframework.security.core.userdetails.User principal = ((org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        System.out.println(principal.getUsername());
-        Employer newEmployer = Employer.builder() // TODO: przenieść do employerDTO
-                .myUser(myUserService.getByEmail(principal.getUsername()).orElseThrow())
-                .companyName(employerDto.getCompanyName())
-                .industry(employerDto.getIndustry())
-                .position(employerDto.getPosition())
-                .salary(employerDto.getSalary())
-                .location(employerDto.getLocation())
-                .workingTime(employerDto.getWorkingTime())
-                .photoSrc(employerDto.getPhotoSrc())
-                .optionalRequirements(employerDto.getOptionalRequirements())
-                .build();
-
-        employerService.createEmployer(newEmployer);
-        MyUser myUser = myUserService.getByEmail(employerDto.getUserEmail()).orElseThrow();
-        myUser.setEmployer(newEmployer);
-        myUserService.save(myUser); // TODO: przenieść do employerService
+        MyUser myUser = myUserService.getByEmail(principal.getUsername()).orElseThrow();
+        Employer newEmployer = employerDto.toEmployer(myUser);
+        employerService.createEmployer(newEmployer, myUser);
     }
 }

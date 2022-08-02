@@ -1,8 +1,8 @@
 package com.jobly.Jobly.model.user;
 
 import com.jobly.Jobly.model.Candidate;
-import com.jobly.Jobly.model.employer.Employer;
 import com.jobly.Jobly.model.Role;
+import com.jobly.Jobly.model.employer.Employer;
 import lombok.*;
 
 import javax.persistence.*;

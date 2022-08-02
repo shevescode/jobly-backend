@@ -3,8 +3,8 @@ package com.jobly.Jobly.controller;
 import com.jobly.Jobly.model.Role;
 import com.jobly.Jobly.model.user.MyUser;
 import com.jobly.Jobly.model.user.UserDto;
-import com.jobly.Jobly.service.RoleService;
 import com.jobly.Jobly.service.MyUserService;
+import com.jobly.Jobly.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -29,7 +32,7 @@ public class AuthRestController {
     private final RoleService roleService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> authenticateUser(@RequestBody UserDto userDto){
+    public ResponseEntity<String> authenticateUser(@RequestBody UserDto userDto) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 userDto.getEmail(), userDto.getPassword()));
 
@@ -38,14 +41,14 @@ public class AuthRestController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody UserDto userDto){
+    public ResponseEntity<?> registerUser(@RequestBody UserDto userDto) {
 //        // add check for username exists in a DB
 //        if(userService.existsByUsername(userDto.getUsername())){
 //            return new ResponseEntity<>("Username is already taken!", HttpStatus.BAD_REQUEST);
 //        }
 
         // add check for email exists in DB
-        if(myUserService.existsByEmail(userDto.getEmail())){
+        if (myUserService.existsByEmail(userDto.getEmail())) {
             return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
         }
 
