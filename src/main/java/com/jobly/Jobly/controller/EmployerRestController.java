@@ -6,13 +6,10 @@ import com.jobly.Jobly.model.user.MyUser;
 import com.jobly.Jobly.service.EmployerService;
 import com.jobly.Jobly.service.MyUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.security.PermitAll;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
@@ -29,9 +26,10 @@ public class EmployerRestController {
     }
 
     @PostMapping("/employer")
-    public void createEmployer(@RequestBody EmployerDto employerDto, @AuthenticationPrincipal org.springframework.security.core.userdetails.User principal) {
+    public ResponseEntity<?> createEmployer(@RequestBody EmployerDto employerDto, @AuthenticationPrincipal org.springframework.security.core.userdetails.User principal) {
         MyUser myUser = myUserService.getByEmail(principal.getUsername()).orElseThrow();
         Employer newEmployer = employerDto.toEmployer(myUser);
         employerService.createEmployer(newEmployer, myUser);
+        return new ResponseEntity<>("Employer created", HttpStatus.OK);
     }
 }
