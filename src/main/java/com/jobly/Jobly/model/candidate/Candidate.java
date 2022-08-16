@@ -1,17 +1,17 @@
-package com.jobly.Jobly.model;
+package com.jobly.Jobly.model.candidate;
 
 import com.jobly.Jobly.model.user.MyUser;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Candidate {
 
     @Id
