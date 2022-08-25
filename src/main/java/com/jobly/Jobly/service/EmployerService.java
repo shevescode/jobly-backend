@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +18,10 @@ public class EmployerService {
 
     public List<Employer> getAll() {
         return employerRepository.findAll();
+    }
+
+    public Employer getEmployer(long id) {
+       return employerRepository.findById(id).orElseThrow();
     }
 
     public void createEmployer(Employer employer, MyUser myUser) {

@@ -1,11 +1,13 @@
 package com.jobly.Jobly.model.employer;
 
 import com.jobly.Jobly.model.user.MyUser;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 public class EmployerDto {
 
     private String userEmail;
@@ -30,5 +32,19 @@ public class EmployerDto {
                 .photoSrc(photoSrc)
                 .optionalRequirements(optionalRequirements)
                 .build();
+    }
+
+    public static EmployerDto fromEmployer(Employer employer) {
+        return EmployerDto.builder()
+                .companyName(employer.getCompanyName())
+                .industry(employer.getIndustry())
+                .position(employer.getPosition())
+                .salary(employer.getSalary())
+                .location(employer.getLocation())
+                .workingTime(employer.getWorkingTime())
+                .photoSrc(employer.getPhotoSrc())
+                .optionalRequirements(employer.getOptionalRequirements())
+                .build();
+
     }
 }
